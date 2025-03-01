@@ -21,7 +21,8 @@ function quickSort(arr){
     return [...quickSort(left),pivot,...quickSort(right)];
 }
 
-console.log(quickSort([10,29,14,37,14]));
+console.log(quickSort([10,29,14,37,14])); 
+
 //Time complexity: O(n^2);
 //Space complexity: O(n);
 
