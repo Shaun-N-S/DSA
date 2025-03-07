@@ -1,5 +1,5 @@
 //without collosion handling
-
+ 
 class HashTable {
     constructor(size) {
         this.table = new Array(size);
@@ -147,3 +147,172 @@ console.log(table1.get("city")); // Bangalore
 
 table1.remove("age");
 table1.display();
+
+
+// Double Hashing methode
+
+class HashTable3 {
+    constructor(size) {
+        this.table = new Array(size);
+        this.size = size;
+    }
+
+    // First hash function
+    hash1(key) {
+        let total = 0;
+        for (let char of key) {
+            total += char.charCodeAt(0);
+        }
+        return total % this.size;
+    }
+
+    // Second hash function (must return a non-zero step size)
+    hash2(key) {
+        let prime = 7; // A prime number smaller than the table size
+        return prime - (this.hash1(key) % prime);
+    }
+
+    // Insert key-value pair
+    set(key, value) {
+        let index = this.hash1(key);
+        let stepSize = this.hash2(key);
+        let i = 0;
+
+        while (this.table[(index + i * stepSize) % this.size] !== undefined) {
+            i++; // Find next available slot using double hashing
+        }
+
+        this.table[(index + i * stepSize) % this.size] = [key, value];
+    }
+
+    // Retrieve value by key
+    get(key) {
+        let index = this.hash1(key);
+        let stepSize = this.hash2(key);
+        let i = 0;
+
+        while (this.table[(index + i * stepSize) % this.size] !== undefined) {
+            let [storedKey, value] = this.table[(index + i * stepSize) % this.size];
+            if (storedKey === key) return value;
+            i++;
+        }
+
+        return undefined; // Key not found
+    }
+
+    // Remove key-value pair
+    remove(key) {
+        let index = this.hash1(key);
+        let stepSize = this.hash2(key);
+        let i = 0;
+
+        while (this.table[(index + i * stepSize) % this.size] !== undefined) {
+            let [storedKey] = this.table[(index + i * stepSize) % this.size];
+            if (storedKey === key) {
+                this.table[(index + i * stepSize) % this.size] = undefined;
+                return;
+            }
+            i++;
+        }
+    }
+
+    // Display hash table
+    display() {
+        this.table.forEach((entry, index) => {
+            if (entry) console.log(index, entry);
+        });
+    }
+}
+
+// ✅ Example usage
+const table2 = new HashTable3(11); // Use prime size for better performance
+table2.set("name", "Shaun");
+table2.set("age", 18);
+table2.set("city", "Bangalore");
+
+console.log(table2.get("name")); // Shaun
+console.log(table2.get("city")); // Bangalore
+
+table2.remove("age");
+table2.display();
+
+
+
+
+
+
+
+class HashTable {
+    constructor(size) {
+        this.table = new Array(size);
+        this.size = size;
+    }
+
+    hash(key) {
+        let total = 0;
+        for (let i = 0; i < key.length; i++) {
+            total += key.charCodeAt(i);
+        }
+        return total % this.size;
+    }
+
+    set(key, value) {
+        let index = this.hash(key);
+        let startIndex = index;
+
+        while (this.table[index] && this.table[index][0] !== key) {
+            index = (index + 1) % this.size;
+            if (index === startIndex) {
+                console.log("Hash table is full");
+                return;
+            }
+        }
+
+        this.table[index] = [key, value];
+    }
+
+    get(key) {
+        let index = this.hash(key);
+        let startIndex = index;
+
+        while (this.table[index]) {
+            if (this.table[index][0] === key) {
+                return this.table[index][1];
+            }
+            index = (index + 1) % this.size;
+            if (index === startIndex) break;
+        }
+
+        return undefined;
+    }
+
+    remove(key) {
+        let index = this.hash(key);
+        let startIndex = index;
+
+        while (this.table[index]) {
+            if (this.table[index][0] === key) {
+                this.table[index] = null; // Mark as deleted (null)
+                return;
+            }
+            index = (index + 1) % this.size;
+            if (index === startIndex) break;
+        }
+    }
+
+    display() {
+        for (let i = 0; i < this.size; i++) {
+            console.log(i, this.table[i]);
+        }
+    }
+}
+
+// Example usage
+const ht = new HashTable(10);
+ht.set("name", "Shaun");
+ht.set("age", 18);
+ht.set("city", "NY");
+console.log(ht.get("age")); // 18
+ht.remove("age");
+console.log(ht.get("age")); // undefined
+ht.display();

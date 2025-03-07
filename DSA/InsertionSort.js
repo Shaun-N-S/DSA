@@ -17,4 +17,4 @@ function insertionSort(arr){
 
 console.log(insertionSort([10,29,14,37,14]));
 //Time complexity: O(n^2);
-//Space complexity: O(1);
+//Space complexity: O(1);   
