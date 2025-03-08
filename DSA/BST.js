@@ -126,3 +126,23 @@ bst.inorder();
 console.log('-----------------');
 console.log(bst.contains(10));
 console.log(bst.contains(5));
+
+
+
+
+// Find the closest value in BST.
+
+function findClosest(tree,target){
+    let closest = tree.root.value;
+    let current = tree.root;
+
+    while(current){
+        if(Math.abs(target - closest) > Math.abs(target - current.value)){
+            closest = current.value;
+        }
+        current = target < current.value ? current.left : current.right;
+    }
+   return closest;
+}
+
+console.log(findClosest(bst,9));
