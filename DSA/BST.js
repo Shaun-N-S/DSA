@@ -145,4 +145,4 @@ function findClosest(tree,target){
    return closest;
 }
 
-console.log(findClosest(bst,9));
+console.log(findClosest(bst,9)); 
