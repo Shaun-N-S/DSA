@@ -147,3 +147,10 @@ function findClosest(tree,target){
 
 console.log(findClosest(bst,9)); 
 
+function isValidBST(node,min = -Infinity,max = Infinity){
+    if(!node) return true;
+    if(node.value <= min || node.value >= max) return false;
+    return isValidBST(node.left,min,node.value) && isValidBST(node.right,node.value,max);
+}
+
+console.log(isValidBST(bst.root));
