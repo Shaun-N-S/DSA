@@ -184,7 +184,7 @@ console.log("Heapified Array:", buildMaxHeap(array));
 
 
 
-// Heap Sort   (Time Complexity: O(n log n))
+// Heap Sort   (Time Complexity: O(n log n))    
 
 function heapSort(arr) {
     let n = arr.length;

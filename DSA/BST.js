@@ -127,6 +127,13 @@ console.log('-----------------');
 console.log(bst.contains(10));
 console.log(bst.contains(5));
 
+// Find the height of the BST.
+function findHeight(node){
+    if(!node) return -1;
+    return Math.max(findHeight(node.left),findHeight(node.right)) + 1;
+}
+
+console.log(findHeight(bst.root));
 
 
 
