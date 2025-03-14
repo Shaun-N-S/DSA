@@ -161,3 +161,73 @@ console.log(graph.isCyclic());
 
 
 
+
+
+
+var cloneGraph = function (node) {
+    if (!node) return null
+    //to keep track of already explored neighbouring nodes
+    let clonedMap = new Map()
+
+    //helper function for dfs cloning
+    var dfs = (currentNode) => {
+        //if we have already explored the node,just return it
+        if (clonedMap.has(currentNode)) {
+            return clonedMap.get(currentNode)
+        }
+        //if not explored, create a clone
+        let clone = new Node(currentNode.val)
+        clonedMap.set(currentNode, clone)
+        for (let neighbor of currentNode.neighbors) {
+            clone.neighbors.push(dfs(neighbor))
+        }
+        return clone
+    }
+    return dfs(node)
+};
+
+
+
+//sortest path in weighted graph
+
+function shortestPath(graph, start, end) {
+    let queue = [start];
+    let visited = new Set();
+    let distance = {};
+    let previous = {};
+    
+    for(let vertex in graph.adjacencyList){
+        if(vertex === start){
+            distance[vertex] = 0;
+        }else{
+            distance[vertex] = Infinity;
+        }
+    }
+    
+    while(queue.length > 0){
+        let current = queue.shift();
+        
+        if(current === end){
+            let path = [];
+            let node = end;
+            while(node !== null){
+                path.unshift(node);
+                node = previous[node];
+            }
+            return path;
+        }
+        
+        if(!visited.has(current)){
+            visited.add(current);
+            for(let neighbor of graph.adjacencyList[current]){
+                let weight = distance[current] + neighbor.weight;
+                if(weight < distance[neighbor.node]){
+                    distance[neighbor.node] = weight;
+                    previous[neighbor.node] = current;
+                    queue.push(neighbor.node);
+                }
+            }
+        }
+    }
+    return null;
+}
