@@ -161,3 +161,20 @@ function isValidBST(node,min = -Infinity,max = Infinity){
 }
 
 console.log(isValidBST(bst.root));
+
+
+
+
+function levelOrderTraversal(root) {
+    if (!root) return;
+    let queue = [root];
+
+    while (queue.length) {
+        let node = queue.shift();
+        console.log(node.value);
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+    }
+}
+
+levelOrderTraversal(bst.root);
