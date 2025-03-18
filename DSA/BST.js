@@ -178,3 +178,33 @@ function levelOrderTraversal(root) {
 }
 
 levelOrderTraversal(bst.root);
+
+
+
+
+
+
+function kthSmallest(root, k) {
+    let count = 0;
+    let result = null;
+
+    function inorder(node) {
+        if (!node || result !== null) return; // Stop if result is found
+        
+        inorder(node.left); // Traverse left subtree
+
+        count++; // Process current node
+        if (count === k) {
+            result = node.value; // Found k-th smallest
+            return;
+        }
+
+        inorder(node.right); // Traverse right subtree
+    }
+
+    inorder(root);
+    return result;
+}
+
+// Example Usage:
+console.log(kthSmallest(bst.root, 3)); // Finds the 3rd smallest element

@@ -49,7 +49,7 @@ class MaxHeap {
             if (right < this.heap.length && this.heap[right] > this.heap[largest]) {
                 largest = right;
             }
-            if (largest === index) break;
+            if (largest === index) return;
 
             this.swap(index, largest);
             index = largest;
